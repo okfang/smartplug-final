@@ -1,6 +1,12 @@
 from myapp import create_app
+from flask import current_app
 import config
+from myapp import db
 
 app = create_app('config')
 
-app.run(host='0.0.0.0', debug=True)
+# with app.app_context():
+#     db.create_all()
+
+app.run(debug=True)
+
