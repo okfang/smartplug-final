@@ -2,10 +2,10 @@
 {% block body %}
   {% if session.logged_in %}
       <h2>show devices！</h2>
-    <form action="{{ url_for('add_device') }}" method=post class=add-entry>
+    <form action="{{ url_for('main.add_device') }}" method=post class=add-entry>
       <dl>
         <dt>Category:
-        <dd><input type=text size=30 name=category_name>
+        <dd><input type=text size=30 name=category_type>
         <dt>Description:
         <dd><<input type=text size=30 name=description>
         <dd><input type=submit value=add>
