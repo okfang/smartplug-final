@@ -65,10 +65,20 @@ def upload_device_info():
     return 'upload successfully!'
 
 
+@main.route('/json')
+def json():
+    data = {"power":456}
+    return jsonify(data)
+
+@main.route('/')
+def index():
+    return render_template('index.html')
+
 ###############   Page      ###########################
 
+
 #主页
-@main.route('/')
+@main.route('/home')
 @login_required
 def home():
     user = User.query.get(session["user_id"])

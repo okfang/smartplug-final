@@ -20,5 +20,5 @@ def test():
 
 if __name__ == '__main__':
     # manager.run()
-    app.run(debug=True)
+    app.run(host='0.0.0.0')
     # manager.run(commands='runserver')
