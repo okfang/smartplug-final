@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime,date
 from functools import wraps
 from urllib import parse
 import json
@@ -9,7 +9,9 @@ from flask_login import login_required
 from myapp import db
 from myapp.forms import AddDeviceForm
 from myapp.main import main
-from myapp.models import User, Device
+from myapp.models import User, Device, Device_energy_info
+
+
 
 
 ###############   API     ###########################
@@ -20,7 +22,7 @@ def api_auth(func):
         token = kwargs['token']
         user = User.verifg_auth_token(token)
         if user:
-            return func(token,*args, **kwargs)
+            return func(user.id,*args, **kwargs)
         return jsonify({'code':403, 'message':'unvalid token or token has expired'})
     return decorated_func
 
@@ -50,7 +52,7 @@ def get_device(device_id):
 
 #获取用户设备列表
 @main.route('/user/device/list')
-@api_auth
+@login_required
 def get_user_device_list(user):
     data = {}
     data['user_id'] = user.id
@@ -61,8 +63,31 @@ def get_user_device_list(user):
 #设备上传接口
 @main.route('/device/info/upload', methods=['POST'])
 @login_required
-def upload_device_info():
-    return 'upload successfully!'
+def upload_device_info(user_id):
+    data = request.get_json()
+    device_info = Device_energy_info(
+        device_id = data.device_id,
+        upload_time = datetime.utcnow(),
+        month_energy = data.year_detail.month_list.month_list[7].energy,
+        day_energy = data.mon_detail.day_list[data.time.day-1],
+        current_power = data.power_current.power,
+        year = data.time.year,
+        month = data.time.month,
+        day = data.time.day,
+        hour = data.time.hour
+    )
+
+    #更新device的当前功率
+    if data.device_id:
+        device = Device.query.get(data.device_id)
+        device.power = data.power_current.power
+        device.total_energy_consumption = data.mon_detail.day_list[data.time.day-1]
+        db.session.add(device)
+
+    db.session.add(device_info)
+    db.session.commit()
+
+    return jsonify({'code':200})
 
 
 @main.route('/json')

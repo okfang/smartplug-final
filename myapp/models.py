@@ -83,9 +83,17 @@ class Device_energy_info(db.Model):
     __tablename__ = "device_energy_info"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     device_id = db.Column(db.Integer, db.ForeignKey('device.id'),  nullable=False)
-    collect_time = db.Column(db.DateTime, nullable=False)
-    total_energy_consumption = db.Column(db.Float, nullable=False)
-    power = db.Column(db.Float, nullable=False)
+    upload_time = db.Column(db.DateTime, nullable=False)
+    month_energy = db.Column(db.Float, nullable=False)
+    day_energy = db.Column(db.Float, nullable=True)
+    current_power = db.Column(db.Float, nullable=False)
+    year = db.Column(db.Integer, nullable=True)
+    month  = db.Column(db.Integer, nullable=True)
+    mday = db.Column(db.Integer, nullable=True)
+    wday = db.Column(db.Integer, nullable=True)
+    hour = db.Column(db.Integer, nullable=True)
+
+
 
     # def __init__(self,device_id, collect_time, total_energy_consumption, power):
     #     self.device_id = device_id
