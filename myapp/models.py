@@ -84,6 +84,8 @@ class Device_energy_info(db.Model):
     mday = db.Column(db.Integer, nullable=True)
     wday = db.Column(db.Integer, nullable=True)
     hour = db.Column(db.Integer, nullable=True)
+    min = db.Column(db.Integer, nullable=True)
+    sec = db.Column(db.Integer, nullable=True)
 
 
 #设备类型

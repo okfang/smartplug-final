@@ -8,7 +8,7 @@ blueprints = [
     'myapp.main:main'
 ]
 
-category_set = ["Light", "Television","air conditioning","Fridge","Computer","Fan"]
+category_set = ["First option", "Second option","Third option"]
 
 db = SQLAlchemy()
 

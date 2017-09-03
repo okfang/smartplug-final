@@ -32,9 +32,9 @@ def home():
     return render_template('home.html',data=data)
 
 #新建设备
-@main.route('/device/add', methods=['GET','POST'])
+@main.route('/device/new', methods=['GET','POST'])
 @login_required
-def add_device():
+def new_device():
     form = AddDeviceForm()
     if form.validate_on_submit():
         device = Device(category_type=form.category_type.data,
