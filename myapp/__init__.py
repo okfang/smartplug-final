@@ -5,8 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import import_string
 from flask_cors import CORS
 blueprints = [
-    'myapp.main:main',
-    'myapp.auth:auth'
+    'myapp.main:main'
 ]
 
 category_set = ["Light", "Television","air conditioning","Fridge","Computer","Fan"]
@@ -15,7 +14,7 @@ db = SQLAlchemy()
 
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
-login_manager.login_view = 'auth.login'
+login_manager.login_view = 'main.login'
 
 bootstrap = Bootstrap()
 
@@ -46,7 +45,3 @@ def create_app(config):
             db.session.commit()
 
     return app
-
-
-
-from myapp.main import views

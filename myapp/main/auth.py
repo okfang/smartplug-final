@@ -2,13 +2,13 @@ from datetime import datetime
 from flask import flash,redirect,url_for,render_template,session,request,jsonify,make_response
 from flask_login import login_required, login_user, logout_user
 from myapp.forms import RegistrationForm, LoginForm
-from myapp.auth import auth
 from myapp import db
 from myapp.models import User
+from myapp.main import main
 
 
 #注册
-@auth.route('/register', methods=['GET', 'POST'])
+@main.route('/register', methods=['GET', 'POST'])
 def register():
     error = None
     #
@@ -41,7 +41,7 @@ def register():
 
 
 #简单登录
-@auth.route('/login', methods=['GET', 'POST'])
+@main.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
     # user = User.query.filter_by(email=request.form['email']).first()
@@ -69,9 +69,9 @@ def login():
     return render_template('auth/login.html', form=form)
 
 #简单退出
-@auth.route('/logout', methods=['GET'])
+@main.route('/logout', methods=['GET'])
 @login_required
 def logout():
     logout_user()
     flash('You have been logged out.')
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('main.login'))
