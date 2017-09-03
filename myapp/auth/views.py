@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import flash,redirect,url_for,render_template,session
+from flask import flash,redirect,url_for,render_template,session,request,jsonify,make_response
 from flask_login import login_required, login_user, logout_user
 from myapp.forms import RegistrationForm, LoginForm
 from myapp.auth import auth
@@ -11,12 +11,28 @@ from myapp.models import User
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     error = None
+    #
+    # if User.query.filter_by(email=request.form['email']).count()==0:
+    #     user = User(
+    #         email=request.form["email"],
+    #         username=request.form["username"],
+    #         password=request.form["password"],
+    #         register_time=datetime.utcnow()
+    #     )
+    #     db.session.add(user)
+    #     db.session.commit()
+    #     return redirect(url_for('auth.login'))
+    # else:
+    #     return jsonify({'error':'email already been use!'})
+
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(email=form.email.data,
-                    username=form.username.data,
-                    password=form.password.data,
-                    register_time=datetime.utcnow())
+        user = User(
+            email=form.email.data,
+            username=form.username.data,
+            password=form.password.data,
+            register_time=datetime.utcnow()
+        )
         db.session.add(user)
         db.session.commit()
         flash('You can now login.')
@@ -28,6 +44,15 @@ def register():
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
+    # user = User.query.filter_by(email=request.form['email']).first()
+    # if user is not None and user.verify_password(request.form['password']):
+    #     session["user_id"] = user.id
+    #     return redirect(url_for('main.home'))
+    # return jsonify({'error':'Invalid username or password'})
+
+
+    # return render_template('index.html', form=form)
+    #
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -35,7 +60,11 @@ def login():
             login_user(user, form.remember_me.data)
             # g是全局本地变量
             session["user_id"] = user.id
-            return redirect(url_for('main.home'))
+            response = make_response(redirect(url_for('main.home')))
+            #设置cookie
+            response.set_cookie('user_id',str(user.id))
+            response.set_cookie('user_name',user.username)
+            return response
         flash('Invalid username or password')
     return render_template('auth/login.html', form=form)
 
@@ -44,6 +73,5 @@ def login():
 @login_required
 def logout():
     logout_user()
-    del session['user_id']
     flash('You have been logged out.')
     return redirect(url_for('auth.login'))

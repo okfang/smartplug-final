@@ -1,6 +1,5 @@
-
-
 device_data = {
+    "device_id":1,
     "year_detail": {
         "err_code": 0,
         "month_list": [
@@ -40,7 +39,7 @@ device_data = {
         "day_list": [
             {
                 "month": 8,
-                "energy": 0,
+                "energy": 4,
                 "year": 2017,
                 "day": 28
             },

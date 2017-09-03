@@ -3,7 +3,7 @@ from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import import_string
-
+from flask_cors import CORS
 blueprints = [
     'myapp.main:main',
     'myapp.auth:auth'
@@ -22,6 +22,8 @@ bootstrap = Bootstrap()
 def create_app(config):
     app = Flask(__name__)
     app.config.from_object(config)
+
+    CORS(app, supports_credentials=True)
 
     #load blueprints
     for bp_name in blueprints:
@@ -42,10 +44,6 @@ def create_app(config):
             for x in category_set:
                 db.session.add(Category(type=x))
             db.session.commit()
-    #     category_set = Category.query.all()
-    #     for category in category_set:
-    #         print("get category: ",category.type)
-    #         g.category_set[category.type] = category.id
 
     return app
 
