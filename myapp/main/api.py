@@ -62,6 +62,16 @@ def get_daily_powerchart():
     response.headers["mimetype"] = 'application/json'
     return response, 200
 
+@main.route('/plug/ranking')
+def get_plug_ranking():
+    deviceList = Device.query.filter_by(user_id=config.USER_ID).order_by(Device.power.desc()).all()
+    data = {}
+    data["labels"] = [device.name for device in deviceList]
+    power_list = [device.power for device in deviceList]
+    data["datasets"] = [{  'label' :"plug",'backgroundColor' : '#00FF00', 'borderColor' : 'palette.transparent',  'data' : power_list }]
+    response = make_response(json2.dumps(data))
+    response.headers["mimetype"] = 'application/json'
+    return response, 200
 
 @main.route('/user/daily/linechart')
 def get_daily_linechart():
@@ -72,9 +82,9 @@ def get_daily_linechart():
     devices = user.devices.all()
     labels = ['Total']
     labels.extend([device.category_type for device in devices])
-
+    backgroundColor = ['#FF0000', '#00FF00', '#C0FFEE', '#EEFF0C', '#ABCDEE', '#BCDEEF', '#BEEFEE']
     for i in range(len(labels)):
-        data['datasets'].append({  'label' :labels[i],'backgroundColor' : '#00FF00', 'borderColor' : 'palette.transparent',  'data' :[str(random.randint(0, 20)) for i in range(len(data['labels']))] })
+        data['datasets'].append({  'label' :labels[i],'backgroundColor' :backgroundColor[i], 'borderColor' : 'palette.transparent',  'data' :[str(random.randint(0, 20)) for i in range(len(data['labels']))] })
     # data = {
     #     'labels' : ['1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00'],
     #     'datasets' :[
@@ -99,9 +109,9 @@ def get_monthly_linechart():
     devices = user.devices.all()
     labels = ['Total']
     labels.extend([device.category_type for device in devices])
-
+    backgroundColor = ['#FF0000', '#00FF00', '#C0FFEE', '#EEFF0C', '#ABCDEE', '#BCDEEF', '#BEEFEE']
     for i in range(len(labels)):
-        data['datasets'].append({'label': labels[i], 'backgroundColor': '#00FF00', 'borderColor': 'palette.transparent',
+        data['datasets'].append({'label': labels[i], 'backgroundColor': backgroundColor[i], 'borderColor': 'palette.transparent',
                                  'data': [str(random.randint(0, 20)) for i in range(len(data['labels']))]})
     response =  make_response(json2.dumps(data))
     response.headers["mimetype"] = 'application/json'
