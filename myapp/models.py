@@ -1,9 +1,6 @@
 from flask_login import UserMixin
 from myapp import db
 from werkzeug.security import generate_password_hash, check_password_hash
-from myapp import login_manager
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, SignatureExpired, BadSignature
-from flask import current_app
 
 #用户
 class User(UserMixin,db.Model):
@@ -20,7 +17,6 @@ class User(UserMixin,db.Model):
     latitude = db.Column(db.Float, nullable=True)
     devices = db.relationship('Device',backref='user',lazy='dynamic')
 
-
     @property
     def password(self):
         raise AttributeError('password is not a readable attribute')
@@ -32,27 +28,6 @@ class User(UserMixin,db.Model):
     def verify_password(self,password):
         return check_password_hash(self.password_hash, password)
 
-    def generate_auth_token(self,expiration = 600):
-        s = Serializer(current_app.config['SECRET_KEY'],expires_in=expiration)
-        return s.dumps({'id': self.id})
-
-    @staticmethod
-    def verifg_auth_token(token):
-        s = Serializer(current_app.config['SECRET_KEY'])
-        try:
-            data = s.loads(token)
-        except SignatureExpired:
-            return None # valid token but expired
-        except BadSignature:
-            return None
-        user = User.query.get[data['id']]
-        return user
-
-
-#flask_login 回调函数
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
 
 #设备
 class Device(db.Model):
@@ -68,7 +43,6 @@ class Device(db.Model):
     used_time = db.Column(db.DateTime, nullable =True)
     status = db.Column(db.Integer, nullable=True)
     device_energy_info_list = db.relationship('Device_energy_info', backref='device', lazy='dynamic')
-
 
 #设备提交上传信息
 class Device_energy_info(db.Model):

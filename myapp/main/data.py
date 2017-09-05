@@ -82,3 +82,54 @@ device_data = {
         "deviceId": "8006486ECAF3B37296EE562F3E413D10187823FA"
     }
 }
+
+
+line_chart_data = {
+        'labels' : ['1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00'],
+        'datasets' :[
+                    {  'label' : 'Total', 'backgroundColor' : '#00FF00', 'borderColor' : 'palette.transparent', 'data' : [
+                    '0.1', '0.2', '3.1', '4.5', '5.8', '1.2', '1.1']},
+                    {'label' : 'Light', 'backgroundColor' : '#FF0000', 'borderColor' : 'palette.transparent', 'data' : [
+                    '1', '2', '3', '4', '3', '2', '1']},
+                    {'label' : 'Computer', 'backgroundColor' : '#7D26CD', 'borderColor' : 'palette.transparent', 'data' : [
+                    '5', '4', '3', '2', '1', '4', '5']}
+        ]
+    }
+
+pipe_chart_data = {
+        'labels': ['Light', 'Computers', 'Television', 'Refrige', 'Air-Conditioner', 'Micro-wave', 'Fans'],
+        'datasets': {
+            'label': '颜色们',
+            'backgroundColor': ['#FF0000', '#00FF00', '#C0FFEE', '#EEFF0C', '#ABCDEE',
+                                '#BCDEEF', '#BEEFEE'],
+            'data': ['0.4', '0.2', '3.1', '8', '5.8', '1.2', '2.0']
+        }
+    }
+
+plugs_data = [{'name' :'plug1' ,'id':'asdkfbee33','type':'what?','description':'天王盖地虎','consumption':'100kwh'},
+            {'name' :'plug2' ,'id':'asdkfbee33','type':'what?','description':'宝塔镇河妖','consumption':'122kwh'},
+            {'name' :'plug3' ,'id':'asdkfbee33','type':'what?','description':'左青龙右白虎','consumption':'233kwh'}
+    ]
+
+map_data = {
+        'ViewX' : '58.404',
+        'ViewY' : '15.598',
+        'ViewScale' : '16',
+        'MyposX' : '58.4042552',
+        'MyposY' : '15.5989675',
+        'MyInfo' : 'I am here',
+        0:{'posX': '58.40425', 'posY': '15.59896', 'Rad': '12', 'FillOpcity': '0.4', 'FillColor': '#F00000',
+             'Info': 'color:#F00000'},
+        1:{'posX': '58.40436', 'posY': '15.59895', 'Rad': '10', 'FillOpcity': '0.4', 'FillColor': '#F20000',
+             'Info': 'color:#F20000'},
+        2:{'posX': '58.40447', 'posY': '15.59893', 'Rad': '10', 'FillOpcity': '0.4', 'FillColor': '#F40000',
+             'Info': 'color:#F40000'},
+        3:{'posX': '58.40424', 'posY': '15.59894', 'Rad': '10', 'FillOpcity': '0.4', 'FillColor': '#F60000',
+             'Info': 'color:#F60000'},
+        4:{'posX': '58.40453', 'posY': '15.59894', 'Rad': '10', 'FillOpcity': '0.4', 'FillColor': '#F80000',
+             'Info': 'color:#F80000'},
+        5:{'posX': '58.40410', 'posY': '15.59892', 'Rad': '10', 'FillOpcity': '0.4', 'FillColor': '#FA0000',
+             'Info': 'color:#FA0000'},
+        6:{'posX': '58.40481', 'posY': '15.59891', 'Rad': '10', 'FillOpcity': '0.4', 'FillColor': '#FC0000',
+             'Info': 'color:#FC0000'}
+    }
